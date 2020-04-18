@@ -6,7 +6,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Response
 
 # Import scrapting dependencies
 from bs4 import BeautifulSoup
@@ -51,10 +51,15 @@ def restaurants():
      session.close()
 
      # Convert list of tuples into normal list
-     response = flask.Response(data)
+     #response = Response(data)
      #making a response object that is built by Flask, inside object will be the data along with the header
-     response.headers["Access-Control-Allow-Origin"] = "*"
+     #response.headers["Access-Control-Allow-Origin"] = "*"
+     
      #return jsonify(data)
+     response = jsonify(data)
+     response.headers.set('Access-Control-Allow-Origin', '*')
+     response.headers.set('Access-Control-Allow-Methods', 'GET, POST')
+
      return response
 
 @app.route("/api/v1.0/available_times")
