@@ -1,10 +1,11 @@
 # Flask.py
-import numpy as np
+#import numpy as np
 import pandas as pd
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
+from waitress import serve
 
 from flask import Flask, jsonify, Response
 
@@ -90,8 +91,8 @@ def available_times():
                     name = name.strip()
                     name = name.lower()
                     res_name = name.replace(' ', '-')
-                    executable_path = {'executable_path': './chromedriver'}
-                    browser = Browser('chrome', **executable_path, headless=True,user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36")
+                    executable_path_1 = {'executable_path': './chromedriver'}
+                    browser = Browser('chrome', executable_path = './chromedriver', headless=True,user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36")
 
                     base_url = 'https://resy.com/cities/ny/'
                     resy_url = base_url+res_name+'?date='+today+'&seats=2'
@@ -161,4 +162,5 @@ def available_times():
     #return jsonify(res_avail)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+#    app.run(debug=False, port=80)
+    serve(app, host='0.0.0.0', port=81)
