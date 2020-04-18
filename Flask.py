@@ -51,8 +51,11 @@ def restaurants():
      session.close()
 
      # Convert list of tuples into normal list
-
-     return jsonify(data)
+     response = flask.Response(data)
+     #making a response object that is built by Flask, inside object will be the data along with the header
+     response.headers["Access-Control-Allow-Origin"] = "*"
+     #return jsonify(data)
+     return response
 
 @app.route("/api/v1.0/available_times")
 def available_times():
